@@ -55,6 +55,16 @@ services:
     networks:
       - elastic
 
+  # Metricbeat container
+  # https://www.elastic.co/guide/en/beats/metricbeat/current/running-on-docker.html
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:7.6.2
+    environment: 
+      - setup.dashboards.enabled=true
+      - setup.kibana.host=kibana:5601
+      - output.elasticsearch.hosts=elasticsearch:9200
+
+
   # # https://www.elastic.co/guide/en/logstash/current/docker-config.html
   # logstash:
   #   image: docker.elastic.co/logstash/logstash:7.6.2
