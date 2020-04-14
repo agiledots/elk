@@ -1,0 +1,28 @@
+filebeat.modules:
+
+#Filebeat system module consumes logs from host OS through a mounted volume
+- module: system
+  syslog:
+    var.paths: ["/var/log/host/system.log*"]
+
+#nginx Module consumes access and error logs from mounted volume.
+- module: nginx
+  access:
+    enabled: true
+    var.paths: ["/var/log/nginx/access.log*"]
+  error:
+    enabled: true
+    var.paths: ["/var/log/nginx/error.log*"]
+
+#MySQL module consumes error and mysql-slow logs from mounted volume.
+- module: mysql
+  error:
+    enabled: true
+    var.paths: ["/var/log/mysql/error.log*"]
+  slowlog:
+    enabled: true
+    var.paths: ["/var/log/mysql/mysql-slow.log*"]
+
+#All data to indexed to Elasticsearch
+output.elasticsearch:
+  hosts: ["elasticsearch:9200"]
